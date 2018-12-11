@@ -103,6 +103,8 @@ uint32_t janus_rtcp_get_remb(char *packet, int len) {
 }
 
 // clang -g -fsanitize=address,fuzzer jrtcp.c -o jrtcp
+// to fuzz: ./jrtcp
+// to reproduce a crash: ./jrtcp crash-file
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
     janus_rtcp_get_remb((char *) data, size);
     return 0;

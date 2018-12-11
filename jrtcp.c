@@ -97,6 +97,8 @@ uint32_t janus_rtcp_get_remb(char *packet, int len) {
 		total -= length*4+4;
 		if(total <= 0)
 			break;
+        if ((length + 1) * sizeof(uint32_t) + sizeof(rtcp) > len)
+			break;
 		rtcp = (janus_rtcp_header *)((uint32_t*)rtcp + length + 1);
 	}
 	return 0;

@@ -65,12 +65,12 @@ uint32_t janus_rtcp_get_remb(char *packet, int len) {
 	if(packet == NULL || len == 0 || len < sizeof(janus_rtcp_header))
 		return 0;
 	janus_rtcp_header *rtcp = (janus_rtcp_header *)packet;
-	if(rtcp->version != 2)
-		return 0;
 	/* Get REMB bitrate, if any */
 	int total = len;
     int offset = 0;
 	while(rtcp) {
+        if(rtcp->version != 2)
+            break;
 		if(rtcp->type == RTCP_PSFB) {
 			int fmt = rtcp->rc;
 			if(fmt == 15 && offset < len - 24) {

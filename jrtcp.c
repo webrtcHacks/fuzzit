@@ -73,7 +73,7 @@ uint32_t janus_rtcp_get_remb(char *packet, int len) {
 	while(rtcp) {
 		if(rtcp->type == RTCP_PSFB) {
 			int fmt = rtcp->rc;
-			if(fmt == 15) {
+			if(fmt == 15 && offset < len - 24) {
 				janus_rtcp_fb *rtcpfb = (janus_rtcp_fb *)rtcp;
 				janus_rtcp_fb_remb *remb = (janus_rtcp_fb_remb *)rtcpfb->fci;
 				if(remb->id[0] == 'R' && remb->id[1] == 'E' && remb->id[2] == 'M' && remb->id[3] == 'B') {

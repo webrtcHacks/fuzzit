@@ -62,7 +62,7 @@ typedef rtcp_fb janus_rtcp_fb;
 
 /* Query an existing REMB message */
 uint32_t janus_rtcp_get_remb(char *packet, int len) {
-	if(packet == NULL || len == 0 || len < sizeof(janus_rtcp_header))
+	if(packet == NULL || len == 0)
 		return 0;
 	janus_rtcp_header *rtcp = (janus_rtcp_header *)packet;
 	/* Get REMB bitrate, if any */
@@ -110,6 +110,7 @@ uint32_t janus_rtcp_get_remb(char *packet, int len) {
 // to fuzz: ./jrtcp
 // to reproduce a crash: ./jrtcp crash-file
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
+    if (size < sizeof(janus_rtcp_header)) return 0;
     janus_rtcp_get_remb((char *) data, size);
     return 0;
 }
